@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "importHelpers": true,
+    "baseUrl": ".",
+    "sourceMap": true,
+    "outDir": "./out",
+    "rootDir": "./src",
+    "jsx": "preserve",
+    "allowSyntheticDefaultImports": true,
+    "strictPropertyInitialization": false,
+    "types": [
+      "node",
+      "webpack",
+      "vuepress-types",
+      "vuepress"
+    ],
+    "include": [
+      "docs/.vuepress/**/*.ts",
+      "docs/.vuepress/**/*.tsx"
+    ],
+    "lib": [
+      "dom",
+      "esnext"
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

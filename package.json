@@ -1,0 +1,37 @@
+{
+  "name": "vuepress-theme-hope-template",
+  "version": "2.0.0",
+  "description": "A project of vuepress-theme-hope",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "docs:build": "vuepress build src",
+    "docs:clean-dev": "vuepress dev src --clean-cache",
+    "docs:dev": "vuepress dev src",
+    "docs:update-package": "pnpm dlx vp-update"
+  },
+  "devDependencies": {
+    "@types/node": "^20.3.3",
+    "@vitejs/plugin-vue-jsx": "^3.0.1",
+    "@vuepress/bundler-vite": "2.0.0-beta.63",
+    "@vuepress/client": "2.0.0-beta.63",
+    "@vuepress/plugin-register-components": "2.0.0-beta.63",
+    "vuepress": "2.0.0-beta.63",
+    "vuepress-theme-hope": "2.0.0-beta.226"
+  },
+  "dependencies": {
+    "@ant-design/icons-vue": "^6.1.0",
+    "ant-design-vue": "4.x",
+    "axios": "^1.4.0",
+    "clipboard": "^2.0.11",
+    "highlight": "^0.2.4",
+    "highlight.js": "^11.8.0",
+    "nanoid": "^4.0.2",
+    "ts-indexdb": "^0.0.8",
+    "vue": "^3.3.4",
+    "vue3-code-block": "^2.2.11",
+    "vue3-excel-editor": "^1.0.20",
+    "vxe-table": "^4.4.2",
+    "xe-utils": "^3.5.11"
+  }
+}
