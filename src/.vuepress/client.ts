@@ -1,5 +1,4 @@
 import {defineClientConfig} from '@vuepress/client'
-import VXETable from 'vxe-table'
 // import 'vxe-table/lib/style.css'
 import VueExcelEditor from 'vue3-excel-editor'
 import Antd from 'ant-design-vue';

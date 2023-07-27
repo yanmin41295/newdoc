@@ -2,7 +2,6 @@ import {getInstance} from "ts-indexdb";
 import {Repository} from "./Repository";
 import {C, Condition, matchAll} from "./condition";
 
-
 export class IndexRepository<T extends { id: number }> implements Repository<T> {
     private readonly tableName: string;
 
@@ -14,6 +13,7 @@ export class IndexRepository<T extends { id: number }> implements Repository<T> 
      * 通过主键查询
      * @param id 主键id值
      */
+    // @ts-ignore
     async findById(id: number) {
         return await getInstance().query_by_primaryKey<T>({
             tableName: this.tableName,
@@ -58,38 +58,43 @@ export class IndexRepository<T extends { id: number }> implements Repository<T> 
         return result;
     }
 
-
     /**
      * 通过主键更新
      * @param data 要更新的实体
      */
     async save(data: T | Partial<Exclude<T, "id">>) {
         if ("id" in data && data["id"]) {
-            console.log("update ", data)
-            await getInstance().update<T>({
-                tableName: this.tableName,
-                condition: item => item.id === data.id,
-                handle: row => {
-                    for (let dataKey in data) {
-                        // @ts-ignore
-                        row[dataKey] = data[dataKey];
-                    }
-                    return row;
+            let row = await this.findById(data["id"]);
+            if (row != null) {
+                for (let dataKey in data) {
+                    // @ts-ignore
+                    row[dataKey] = data[dataKey];
                 }
-            });
-        } else {
-            console.log("insert ", data)
-            delete data["id"];
-            delete data["$id"]
-            console.log("save ", data)
-            await getInstance().insert({
-                tableName: this.tableName,
-                data
-            });
+                console.log("update ", data);
+                await getInstance().update<T>({
+                    tableName: this.tableName,
+                    condition: item => item.id === data.id,
+                    handle: row => {
+                        for (let dataKey in data) {
+                            // @ts-ignore
+                            row[dataKey] = data[dataKey];
+                        }
+                        return row;
+                    }
+                });
+                return
+            }
         }
-
+        console.log("insert ", data)
+        delete data["id"];
+        // @ts-ignore
+        delete data["$id"]
+        console.log("save ", data)
+        await getInstance().insert({
+            tableName: this.tableName,
+            data
+        });
     }
-
 
     async batchSave(data: T[]) {
         for (let datum of data) {
@@ -108,7 +113,6 @@ export class IndexRepository<T extends { id: number }> implements Repository<T> 
         })
     }
 
-
     async deleteByIds(ids: number[]) {
         await getInstance().delete<T>({
             tableName: this.tableName,
@@ -122,5 +126,4 @@ export class IndexRepository<T extends { id: number }> implements Repository<T> 
             condition: item => matchAll(item, param),
         })
     }
-
 }

@@ -61,6 +61,30 @@ async function loadConfig() {
 
 onBeforeMount(async () => {
   await initDb();
+  let tableConfigs = await tableConfigRepo.findAll({name: {condition: "=", value: 't_table_config'}});
+  if (tableConfigs.length > 0) {
+    return
+  }
+  console.log("init table")
+  await tableConfigRepo.save({id: 1, name: "t_table_config", field: "id", label: "id", type: "string", visible: false});
+  await tableConfigRepo.save({id: 2, name: "t_table_config", field: "name", label: "姓名", type: "string"})
+  await tableConfigRepo.save({id: 3, name: "t_table_config", field: "field", label: "属性", type: "string"})
+  await tableConfigRepo.save({id: 4, name: "t_table_config", field: "label", label: "标签", type: "string"})
+  await tableConfigRepo.save({
+    id: 5,
+    name: "t_table_config",
+    field: "type",
+    label: "类型",
+    type: "select",
+    options: "string,number,select,date,datetime,datetimesec"
+  })
+  await tableConfigRepo.save({
+    id: 6,
+    name: "t_table_config",
+    field: "options",
+    label: "选项值",
+    type: "select",
+  })
 })
 
 onMounted(async () => {
